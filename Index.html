@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>مفاجأة ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Cairo,Tahoma,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff7eb3,#ff4d8d);
+overflow:hidden;
+}
+
+.container{
+width:92%;
+max-width:430px;
+background:#fff;
+padding:30px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+text-align:center;
+position:relative;
+z-index:2;
+animation:show .7s;
+}
+
+@keyframes show{
+from{opacity:0;transform:scale(.9);}
+to{opacity:1;transform:scale(1);}
+}
+
+h1{
+color:#ff2d75;
+margin-bottom:15px;
+}
+
+p{
+font-size:20px;
+line-height:1.8;
+color:#555;
+margin-bottom:25px;
+}
+
+button{
+background:#ff2d75;
+color:#fff;
+border:none;
+padding:14px 35px;
+font-size:20px;
+border-radius:40px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+input{
+width:100%;
+padding:15px;
+font-size:20px;
+text-align:center;
+margin-top:20px;
+border:2px solid #ff2d75;
+border-radius:15px;
+outline:none;
+}
+
+.progress{
+width:100%;
+height:10px;
+background:#eee;
+border-radius:10px;
+margin-bottom:20px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#ff2d75;
+transition:.5s;
+}
+
+#quiz,#finish{
+display:none;
+}
+
+#msg{
+margin:18px 0;
+font-weight:bold;
+color:#ff2d75;
+min-height:28px;
+}
+
+#next{
+display:none;
+margin-top:10px;
+}
+
+#final{
+font-size:32px;
+line-height:1.9;
+color:#ff2d75;
+font-weight:bold;
+}
+
+.heart{
+position:fixed;
+bottom:-40px;
+font-size:24px;
+animation:up 6s linear infinite;
+pointer-events:none;
+}
+
+@keyframes up{
+0%{transform:translateY(0) rotate(0);opacity:1;}
+100%{transform:translateY(-120vh) rotate(360deg);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="start">
+
+<h1>🎁 عندي ليكي مفاجأة</h1>
+
+<p>
+لو حليتي كل الأسئلة صح...
+هتعرفي المفاجأة ❤️
+</p>
+
+<button onclick="startGame()">
+ابدئي 💕
+</button>
+
+</div>
+
+<div id="quiz">
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<h1 id="question"></h1>
+
+<input id="answer" placeholder="اكتبي الإجابة">
+
+<div id="msg"></div>
+
+<button onclick="checkAnswer()">
+تأكيد
+</button>
+
+<button id="next" onclick="nextQuestion()">
+التالي ➜
+</button>
+
+</div>
+
+<div id="finish">
+<div id="final"></div>
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+{text:"12 + 18 = ؟",answer:"30"},
+{text:"15 × 4 = ؟",answer:"60"},
+{text:"81 ÷ 9 = ؟",answer:"9"},
+{text:"7 × 8 - 6 = ؟",answer:"50"},
+{text:"45 + 27 = ؟",answer:"72"},
+{text:"مين أجمل بنت في العالم؟ 💖",answer:"سهير"}
+];
+
+let current=0;
+function startGame(){
+document.getElementById("start").style.display="none";
+document.getElementById("quiz").style.display="block";
+showQuestion();
+}
+
+function showQuestion(){
+
+document.getElementById("question").innerHTML=questions[current].text;
+
+document.getElementById("answer").value="";
+
+document.getElementById("msg").innerHTML="";
+
+document.getElementById("next").style.display="none";
+
+document.getElementById("bar").style.width=((current)/questions.length)*100+"%";
+
+}
+
+function checkAnswer(){
+
+let ans=document.getElementById("answer").value.trim();
+
+if(ans.toLowerCase()==questions[current].answer.toLowerCase()){
+
+if(current==questions.length-1){
+
+document.getElementById("quiz").style.display="none";
+
+document.getElementById("finish").style.display="block";
+
+document.getElementById("final").innerHTML=`
+❤️ وأخيرًا... وصلتي للمفاجأة ❤️
+<br><br>
+يمكن الأسئلة كانت مجرد لعبة صغيرة...
+<br><br>
+لكن الحقيقة اللي كنت مستني أقولها هي...
+<br><br>
+<span style="font-size:42px">
+أنا بحبك يا سهير ❤️
+</span>
+<br><br>
+وجودك بيفرق معايا...
+وابتسامتك بتخلّي يومي أحلى.
+<br><br>
+أتمنى تكوني قبلتي المفاجأة دي بابتسامة،
+لأنها معمولة من قلبي. 🌹
+<br><br>
+مهما حصل...
+هتفضلي بالنسبة لي أجمل بنت في الدنيا. 💖
+`;
+
+for(let i=0;i<80;i++){
+
+setTimeout(createHeart,i*100);
+
+}
+
+return;
+
+}
+
+document.getElementById("msg").innerHTML=
+"💖 قربتي تعرفي المفاجأة";
+
+document.getElementById("next").style.display="inline-block";
+
+}else{
+
+document.getElementById("msg").innerHTML=
+"❌ إجابة غير صحيحة... حاولي مرة تانية ❤️";
+
+}
+
+}
+function nextQuestion(){
+
+current++;
+
+showQuestion();
+
+}
+
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML=["❤️","💖","💕","💗"][Math.floor(Math.random()*4)];
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=(18+Math.random()*24)+"px";
+
+heart.style.animationDuration=(4+Math.random()*3)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},7000);
+
+}
+
+document.getElementById("answer").addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+
+checkAnswer();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
